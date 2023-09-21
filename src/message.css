@@ -1,0 +1,39 @@
+/* Message.css */
+
+/* Style for the container of the search bar */
+.search-bar-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px; /* Adjust the width as needed */
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0; /* Set the background color */
+    border-radius: 25px; /* Add border radius for styling */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+  }
+  
+  /* Style for the search icon */
+  .search-icon {
+    color: #555; /* Change icon color */
+    margin-right: 10px; /* Add spacing between icon and input */
+  }
+  
+  /* Style for the input */
+  .search-input {
+    border: none;
+    outline: none;
+    flex: 1; /* Expand to fill available space */
+    padding: 5px;
+    font-size: 1rem; /* Adjust the font size as needed */
+    background-color: transparent; /* Make input background transparent */
+    color: #333; /* Set text color */
+  }
+  
+  /* Hover effect for the search bar container */
+  .search-bar-container:hover {
+    background-color: #e0e0e0; /* Change background color on hover */
+  }
+  
