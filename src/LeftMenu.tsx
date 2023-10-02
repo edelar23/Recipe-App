@@ -3,7 +3,7 @@ import './LeftMenu.css'; // Import your CSS for styling
 function LeftMenu() {
   return (
     <div className="left-menu">
-      <div className="menu-title">Flavour Net</div>
+      <div className="menu-title">Recipify</div>
       <div className="menu-divider"></div>
       <div className="menu-item">Home</div>
       <div className="menu-item">Profile</div>

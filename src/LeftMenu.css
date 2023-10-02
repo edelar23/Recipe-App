@@ -1,11 +1,13 @@
 /* LeftMenu.css */
 
 .left-menu {
-    position: fixed;
+  position: fixed;
+  float: left;
+  width: 13.5%;
   top: 0;
   left: 0;
   min-height: 100vh; /* Set a minimum height to ensure visibility */
-  width: 200px; /* Adjust the width as needed */
+
   background-color: #333;
   color: #fff;
   display: flex;

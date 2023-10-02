@@ -1,14 +1,20 @@
 import LeftMenu from './LeftMenu';
 import Message from './message';
+import PostComponent from './post';
 import './App.css'; // Import your global CSS styles if needed
 
 function App() {
   return (
-    <div className="app-container">
-      <LeftMenu />
-      <div className="content">
-        <Message />
-        {/* Other content of your website */}
+    <div>
+      <div className="app-container">
+        <LeftMenu />
+        <Message />{}
+
+        <div className = "main-page">
+          <PostComponent/>
+          <PostComponent/>
+        </div>
+
       </div>
     </div>
   );
