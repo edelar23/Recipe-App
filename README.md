@@ -28,4 +28,5 @@ If you are developing a production application, we recommend updating the config
 
 Also download: Node JS
 
-Just use this command: npm create vite@latest
+Just use this command:  npm install
+                        npm run dev
