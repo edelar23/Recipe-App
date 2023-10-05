@@ -1,5 +1,5 @@
 // MyPostComponent.jsx
-import "./App.css";
+import './post.css';
 
 const PostComponent = () => {
   return (

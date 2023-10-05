@@ -1,4 +1,5 @@
 import LeftMenu from './LeftMenu';
+import { Link } from 'react-router-dom';
 import "./CreatePost.css";
 
 function CreatePost() {
@@ -6,7 +7,9 @@ function CreatePost() {
     <>
     <LeftMenu/>
     <div className="back-button">
-          <span>&larr;</span> Back
+      <Link to="/">
+          <button>Back</button>
+      </Link>
         </div>
       <div className="create-post-container">
         <div className="left-panel">

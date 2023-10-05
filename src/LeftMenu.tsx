@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './LeftMenu.css'; // Import your CSS for styling
 
 function LeftMenu() {
@@ -5,13 +6,42 @@ function LeftMenu() {
     <div className="left-menu">
       <div className="menu-title">Recipify</div>
       <div className="menu-divider"></div>
-      <div className="menu-item">Home</div>
-      <div className="menu-item">Profile</div>
-      <div className="menu-item">Notifications</div>
-      <div className="menu-item">Calendar</div>
-      <div className="menu-item">Bookmarks</div>
-      <div className="menu-divider"></div>
-      <div className="sign-out">Sign Out</div>
+      <div className="menu-item">
+        <Link to="/">
+          <button>Home</button>
+        </Link>
+      </div>
+      <div className="menu-item">
+        <Link to="/">
+          <button>Profile</button>
+        </Link>
+      </div>
+        
+      <div className="menu-item">
+        <Link to="/">
+          <button>Notifications</button>
+        </Link>
+      </div>
+      <div className="menu-item">
+        <Link to="/">
+          <button>Calendar</button>
+        </Link>
+      </div>
+      <div className="menu-item">
+        <Link to="/">
+          <button>Bookmarks</button>
+        </Link>
+      </div>
+      <div className="menu-item">
+        <Link to="/create">
+          <button>Create a Post</button>
+          </Link>
+      </div>
+      <div className="menu-item">
+        <Link to="/">
+          <button>Sign Out</button>
+        </Link>
+      </div>
     </div>
   );
 }
