@@ -1,9 +1,19 @@
 import LeftMenu from './LeftMenu';
 import Message from './message';
 import PostComponent from './post';
-import CreatePost from './CreatePost';
+import CreatePost, { createRecipe } from './CreatePost';
 import './App.css'; // Import your global CSS styles if needed
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Form, BrowserRouter, createBrowserRouter, createRoutesFromElements, RouterProvider} from 'react-router-dom';
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route>
+      <Route path="/" element={<Home />} />
+      <Route path="/create" element={<CreatePost />} action={createRecipe} />
+    </Route>
+  )
+)
+
 
 function Home(){
   return(
@@ -16,13 +26,7 @@ function Home(){
 }
 function App() {
   return (
-
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/create" element={<CreatePost />} />
-      </Routes>
-    </Router>
+    <RouterProvider router={router} />
   );
 }
 
