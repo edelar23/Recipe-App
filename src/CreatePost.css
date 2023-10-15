@@ -8,8 +8,8 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    top: 10%;
-    left: 50%;
+    margin-top: 11%;
+    left: -10%;
     padding: 20px;
     
   }
@@ -68,5 +68,15 @@
   .align{
     display: flex;
     flex-direction: column;
+  }
+
+  .btn{
+    color: black;
+    font-size: larger;
+    font-weight: bolder;
+    margin-top: 10px;
+    height: 50px;
+    width: auto;
+    background-color: greenyellow;
   }
 
