@@ -42,6 +42,11 @@ function LeftMenu() {
           <button>Sign Out</button>
         </Link>
       </div>
+      <div className="menu-item">
+        <Link to="/view">
+          <button>View Recipe (delete later)</button>
+          </Link>
+      </div>
     </div>
   );
 }
