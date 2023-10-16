@@ -23,7 +23,7 @@ function LeftMenu() {
         </Link>
       </div>
       <div className="menu-item">
-        <Link to="/">
+        <Link to="/calendar">
           <button>Calendar</button>
         </Link>
       </div>

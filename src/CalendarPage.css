@@ -1,0 +1,23 @@
+.calendar-page {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* To prevent any unwanted scrolling */
+}
+
+.calendar-title {
+  font-size: 2em;
+  text-align: center;
+  padding: 20px;
+  background-color: black;
+  border-bottom: 1px solid black;
+  color:white
+}
+
+.calendar-container {
+  flex: 1;
+  display: flex;
+  align-items: stretch; /* Makes the child (calendar) stretch to fill vertical space */
+  justify-content: stretch; /* Makes the child (calendar) stretch to fill horizontal space */
+}

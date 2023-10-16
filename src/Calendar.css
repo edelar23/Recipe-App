@@ -1,0 +1,61 @@
+.calendar {
+    flex: 1; /* This makes it fill its container (calendar-container) */
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2%; /* Adjust this based on your preference */
+    border-radius: 5px;
+    background-color: black;
+    color: black;
+  }
+  
+  .day {
+    padding: 8px;
+    border: 1px solid black;
+    cursor: pointer;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 3px;
+    position: relative;
+  }
+  
+  .day:hover {
+    background-color: red;
+  }
+  
+  .calendar-header {
+    grid-column: span 7; /* Takes the full width of the calendar */
+    background-color: black;
+    padding: 2px ;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    font-size: 24px;
+  }
+  /* ... previous styles ... */
+
+.weekday {
+    grid-column: span 1;
+    background-color: black;
+    padding: 1px 0;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+  }
+  .options {
+    position: absolute;
+    top: 100%; /* Position options right below the day */
+    left: 50%;
+    transform: translateX(-50%); /* Center the options below the day */
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    z-index: 1; /* Ensure options appear above other elements */
+  }
+  
+  .options button {
+    display: block;
+    margin: 5px 0;
+    cursor: pointer;
+  }

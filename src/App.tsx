@@ -3,6 +3,7 @@ import PostComponent from './post';
 import CreatePost, { createRecipe } from './CreatePost';
 import ViewRecipe from './viewRecipe';
 import SignInPage from './SignIn';
+import CalendarPage from './CalendarPage';
 import './App.css'; // Import your global CSS styles if needed
 import { BrowserRouter as Router, Route, Routes, Form, BrowserRouter, createBrowserRouter, createRoutesFromElements, RouterProvider} from 'react-router-dom';
 
@@ -13,6 +14,7 @@ const router = createBrowserRouter(
       <Route path="/create" element={<CreatePost />} action={createRecipe} />
       <Route path="/view" element={<ViewRecipe />} />
       <Route path="/signin" element={<SignInPage />} />
+      <Route path='/calendar' element={<CalendarPage />} />
     </Route>
   )
 )
