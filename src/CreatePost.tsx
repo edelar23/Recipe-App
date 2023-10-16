@@ -85,8 +85,8 @@ export const createRecipe = async ({ request }) => {
   }
 
   const newRecipe = new Recipe_data(recipeData);
+  console.log(recipeData);
   console.log(newRecipe);
-
 
   return null;
 }
