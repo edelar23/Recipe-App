@@ -12,12 +12,12 @@
     align-items: center;
     background-color: #f0f0f0; /* Set the background color */
     border-radius: 25px; /* Add border radius for styling */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+    box-shadow: 0 2px 4px rgb(243, 241, 241); /* Add a subtle box shadow */
   }
   
   /* Style for the search icon */
   .search-icon {
-    color: #555; /* Change icon color */
+    color: #0b0b0b; /* Change icon color */
     margin-right: 10px; /* Add spacing between icon and input */
   }
   
@@ -34,6 +34,6 @@
   
   /* Hover effect for the search bar container */
   .search-bar-container:hover {
-    background-color: #e0e0e0; /* Change background color on hover */
+    background-color: #0d0d0d; /* Change background color on hover */
   }
   

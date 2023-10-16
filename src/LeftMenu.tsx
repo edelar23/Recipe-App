@@ -38,13 +38,13 @@ function LeftMenu() {
           </Link>
       </div>
       <div className="menu-item">
-        <Link to="/">
+        <Link to="/signin">
           <button>Sign Out</button>
         </Link>
       </div>
       <div className="menu-item">
         <Link to="/view">
-          <button>View Recipe (delete later)</button>
+          <button>View Recipe</button>
           </Link>
       </div>
     </div>
