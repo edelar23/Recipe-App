@@ -1,8 +1,7 @@
 import LeftMenu from "./LeftMenu";
 import { Link, Form} from "react-router-dom";
 import "./CreatePost.css";
-import mongoose from 'mongoose';
-import Recipe_data from '../server/models/schemas.js';
+
 
 export default function CreatePost() {
   
@@ -75,18 +74,3 @@ export default function CreatePost() {
   );
 }
 
-export const createRecipe = async ({ request }) => {
-  const data = await request.formData();
-
-  const recipeData = {
-    name: data.get('recipe_name'),
-    ingredients: data.get('ingred'),
-    steps: data.get('step')
-  }
-
-  const newRecipe = new Recipe_data(recipeData);
-  console.log(recipeData);
-  console.log(newRecipe);
-
-  return null;
-}

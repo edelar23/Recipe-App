@@ -29,7 +29,10 @@ const SignInPage: React.FC = () => {
         </div>
         <Link to="/">
           <button>Sign In</button>
-          </Link>
+        </Link>
+        <Link to="/signup">
+          <button>Sign Up</button>
+        </Link>  
       </form>
     </div>
   );

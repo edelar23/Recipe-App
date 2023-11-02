@@ -1,20 +1,23 @@
 import LeftMenu from './LeftMenu';
 import PostComponent from './post';
-import CreatePost, { createRecipe } from './CreatePost';
 import ViewRecipe from './viewRecipe';
 import SignInPage from './SignIn';
 import CalendarPage from './CalendarPage';
+import CreatePost from './CreatePost';
+import SignUpPage from './Signup';
 import './App.css'; // Import your global CSS styles if needed
+
 import { BrowserRouter as Router, Route, Routes, Form, BrowserRouter, createBrowserRouter, createRoutesFromElements, RouterProvider} from 'react-router-dom';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route path="/" element={<Home />} />
-      <Route path="/create" element={<CreatePost />} action={createRecipe} />
+      <Route path="/create" element={<CreatePost />} />
       <Route path="/view" element={<ViewRecipe />} />
       <Route path="/signin" element={<SignInPage />} />
       <Route path='/calendar' element={<CalendarPage />} />
+      <Route path='/signup' element={<SignUpPage />} />
     </Route>
   )
 )
