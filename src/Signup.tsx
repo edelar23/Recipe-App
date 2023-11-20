@@ -11,6 +11,8 @@ const SignUpPage = () => {
     birthday: ''
   });
 
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -18,8 +20,13 @@ const SignUpPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (formData.password.length < 8) {
+      setPasswordError('Password must be at least 8 characters long');
+      return;
+    }
+
     try {
-      const response = await fetch('/signup', {
+      const response = await fetch('http://localhost:3000/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -90,6 +97,7 @@ const SignUpPage = () => {
             required
           />
         </div>
+        {passwordError && <div className="error-message">{passwordError}</div>}
         <button type="submit">Sign Up</button>
         <Link to="/signin">Already have an account? Sign In!</Link>
       </form>
