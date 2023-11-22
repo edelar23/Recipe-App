@@ -98,9 +98,43 @@ app.post('/create', (req, res) => {
   );
 });
 
+// Still need to update the route to include the user ID in the URL
+app.get('/getDailyMacros/:userId', (req, res) => {
+  const userId = req.params.userId;
 
-// ... (other routes and middleware configurations remain the same)
+  db.get('SELECT * FROM macros WHERE user_id = ?', [userId], (err, row) => {
+    if (err) {
+      res.status(500).send('Error fetching daily macros from the database');
+      return console.error(err.message);
+    }
 
+    if (row) {
+      const { protein, carbs, fats } = row;
+      res.status(200).json({ protein, carbs, fats });
+    } else {
+      res.status(404).send('Daily macros not found for the user');
+    }
+  });
+});
+
+//Daily Macros Goal
+app.post('/updateDailyMacros', (req, res) => {
+  const { protein, carbs, fats } = req.body;
+  const userId = 1; // replace with the actual user id
+
+  const sql = 'UPDATE macros SET protein = ?, carbs = ?, fats = ? WHERE user_id = ?';
+
+  db.run(sql, [protein, carbs, fats, userId], (err) => {
+    if (err) {
+      console.error('Error updating daily macros in the database:', err.message);
+      res.status(500).send('Error updating daily macros in the database');
+      return;
+    }
+
+    console.log('Daily macros updated in the database:', { protein, carbs, fats });
+    res.status(200).send('Daily macros updated successfully');
+  });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
