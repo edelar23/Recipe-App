@@ -1,5 +1,6 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, ChangeEvent, FormEvent, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from './AuthContext';
 import './SignIn.css';
 
 const SignInPage: React.FC = () => {
@@ -10,6 +11,9 @@ const SignInPage: React.FC = () => {
 
   const [loginError, setLoginError] = useState<string | null>(null);
 
+  const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -18,7 +22,7 @@ const SignInPage: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3000/login', {
+      const response = await fetch('http://localhost:3000/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,16 +31,24 @@ const SignInPage: React.FC = () => {
       });
 
       if (response.ok) {
-        console.log('User logged in successfully');
-        // Redirect to another page or set user authentication status
+        try {
+          const userData = await response.json();
+          authContext && authContext.login(userData);
+
+          // Redirect to the home page after successful login
+          navigate('/home');
+        } catch (jsonError) {
+          console.error('Error parsing JSON:', jsonError);
+        }
       } else {
+        // Log the error response for debugging
+        const errorResponse = await response.text();
+        console.error('Error logging in:', errorResponse);
+
         setLoginError('Invalid email or password');
-        console.error('Error logging in');
-        // Handle error (display error message or handle accordingly)
       }
     } catch (error) {
       console.error('Error:', error);
-      // Handle error (display error message or handle accordingly)
     }
   };
 
@@ -70,8 +82,8 @@ const SignInPage: React.FC = () => {
         </div>
         {loginError && <div className="error-message">{loginError}</div>}
         <button type="submit">Sign In</button>
-        <Link to="/signup">Don't have an account? Sign Up!</Link>
       </form>
+      <Link to="/signup">Don't have an account? Sign Up</Link>
     </div>
   );
 };

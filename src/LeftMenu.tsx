@@ -1,51 +1,45 @@
-import { Link } from 'react-router-dom';
-import './LeftMenu.css'; // Import your CSS for styling
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from './AuthContext';
+
+import './LeftMenu.css';
 
 function LeftMenu() {
+  const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    authContext && authContext.logout();
+    navigate('/'); // Navigate to the sign-in screen after signing out
+  };
+
   return (
     <div className="left-menu">
       <div className="menu-title">Recipify</div>
       <div className="menu-divider"></div>
       <div className="menu-item">
-        <Link to="/">
-          <button>Home</button>
-        </Link>
+        <Link to="/home"><button>Home</button></Link>
       </div>
       <div className="menu-item">
-        <Link to="/">
-          <button>Profile</button>
-        </Link>
-      </div>
-        
-      <div className="menu-item">
-        <Link to="/">
-          <button>Notifications</button>
-        </Link>
+        <Link to="/profile"><button>Profile</button></Link>
       </div>
       <div className="menu-item">
-        <Link to="/calendar">
-          <button>Calendar</button>
-        </Link>
+        <Link to="/notifications"><button>Notifications</button></Link>
       </div>
       <div className="menu-item">
-        <Link to="/">
-          <button>Bookmarks</button>
-        </Link>
+        <Link to="/calendar"><button>Calendar</button></Link>
       </div>
       <div className="menu-item">
-        <Link to="/create">
-          <button>Create a Post</button>
-          </Link>
+        <Link to="/bookmarks"><button>Bookmarks</button></Link>
       </div>
       <div className="menu-item">
-        <Link to="/signin">
-          <button>Sign Out</button>
-        </Link>
+        <Link to="/create"><button>Create a Post</button></Link>
+      </div>
+      <div className="menu-item" onClick={handleSignOut}>
+        <button>Sign Out</button>
       </div>
       <div className="menu-item">
-        <Link to="/view">
-          <button>View Recipe</button>
-          </Link>
+        <Link to="/view"><button>View Recipe</button></Link>
       </div>
     </div>
   );

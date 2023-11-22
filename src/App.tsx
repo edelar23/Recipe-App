@@ -1,39 +1,30 @@
-import LeftMenu from './LeftMenu';
-import PostComponent from './post';
+// App.tsx
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './AuthContext';
 import ViewRecipe from './viewRecipe';
 import SignInPage from './SignIn';
 import CalendarPage from './CalendarPage';
 import CreatePost from './CreatePost';
 import SignUpPage from './Signup';
-import './App.css'; // Import your global CSS styles if needed
+import Home from './Home';
+import RequireAuth from './PrivateRoute'; // Import the RequireAuth component
+import './App.css';
 
-import { BrowserRouter as Router, Route, Routes, Form, BrowserRouter, createBrowserRouter, createRoutesFromElements, RouterProvider} from 'react-router-dom';
-
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route>
-      <Route path="/" element={<Home />} />
-      <Route path="/create" element={<CreatePost />} />
-      <Route path="/view" element={<ViewRecipe />} />
-      <Route path="/signin" element={<SignInPage />} />
-      <Route path='/calendar' element={<CalendarPage />} />
-      <Route path='/signup' element={<SignUpPage />} />
-    </Route>
-  )
-)
-
-
-function Home(){
-  return(
-    <div>
-      <PostComponent />
-      <LeftMenu />
-    </div>
-  );
-}
 function App() {
   return (
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<SignInPage />} />
+          <Route path="/create" element={<CreatePost />} />
+          <Route path="/view" element={<ViewRecipe />} />
+          <Route path="/home" element={<RequireAuth><Home /></RequireAuth>} />
+          <Route path="/calendar" element={<CalendarPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

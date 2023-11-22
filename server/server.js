@@ -1,9 +1,29 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
-const bcrypt = require('bcrypt'); // Add bcrypt for password hashing
-
+const bcrypt = require('bcrypt');
 const app = express();
+const path = require('path');
+const fs = require('fs');
+const aws = require('aws-sdk');
+const multer = require('multer');
+
+const upload = multer();
+
+// ES6+ example
+//import { S3Client} from "@aws-sdk/client-s3";
+
+//import dotenv from 'dotenv'
+
+//dotenv.config()
+
+aws.config.update({
+  accessKeyId: 'AKIA2IS4W5Z5RSFM2OO5',
+  secretAccessKey: 'E0kLTwjotykDawiZhhvZ/clPG/bzPvX7a/bBVk/I',
+  region: 'us-east-2',
+});
+
+const s3 = new aws.S3();
 
 app.use(cors());
 app.use(express.json());
@@ -20,7 +40,7 @@ app.post('/signup', async (req, res) => {
   const { name, email, password, birthday } = req.body;
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     db.run(
       'INSERT INTO users (name, email, password, age) VALUES (?, ?, ?, ?)',
@@ -53,12 +73,16 @@ app.post('/signin', async (req, res) => {
       }
 
       if (row) {
-        // Compare the provided password with the hashed password in the database
         const passwordMatch = await bcrypt.compare(password, row.password);
 
         if (passwordMatch) {
           console.log('User logged in:', row);
-          res.status(200).send('User logged in successfully');
+
+          res.status(200).json({
+            id: row.id,
+            name: row.name,
+            email: row.email,
+          });
         } else {
           console.log('Invalid email or password');
           res.status(401).send('Invalid email or password');
@@ -71,32 +95,74 @@ app.post('/signin', async (req, res) => {
   );
 });
 
+app.post('/create', upload.any(), async (req, res) => {
+  console.log(req.files);
+  const { recipeName, tags, ingredients, prepTime, cookTime, steps } = req.body;
+  const imageFile = req.files && req.files.imageFile;
 
-app.post('/create', (req, res) => {
-  const { recipeName, tags, imageFile, ingredients, prepTime, cookTime, steps } = req.body;
+  if (imageFile) {
+    const params = {
+      Bucket: 'usersandposts',
+      Key: `uploads/${Date.now()}_${imageFile.name}`,
+      Body: imageFile.data,
+      ContentType: imageFile.mimetype,
+    };
 
-  // Extract user information from the request (you need to implement user authentication)
-  const userId = req.user ? req.user.id : null;
-
-  if (!userId) {
-    // If user is not authenticated, return an error
-    return res.status(401).send('User not authenticated');
-  }
-
-  // Insert the post into the database, associating it with the user
-  db.run(
-    'INSERT INTO posts (user_id, recipeName, tags, imageFile, ingredients, prepTime, cookTime, steps) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-    [userId, recipeName, tags, imageFile, ingredients, prepTime, cookTime, steps],
-    (err) => {
+    // Upload the image to S3
+    s3.upload(params, async (err, data) => {
       if (err) {
-        res.status(500).send('Error inserting data into the database');
-        return console.error(err.message);
+        console.error('Error uploading file to S3:', err);
+        return res.status(500).send('Error uploading file to S3');
       }
-      console.log('Post created in the database:', { recipeName, tags, imageFile, ingredients, prepTime, cookTime, steps });
-      res.status(200).send('Post created successfully');
-    }
-  );
+
+      // Insert the post into the database with the S3 URL
+      db.run(
+        'INSERT INTO posts (user_id, recipeName, tags, imageFile, ingredients, prepTime, cookTime, steps) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+        [req.body.userId, recipeName, tags, data.Location, ingredients, prepTime, cookTime, steps],
+        (dbErr) => {
+          if (dbErr) {
+            console.error('Error inserting data into the database:', dbErr.message);
+            return res.status(500).send('Error inserting data into the database');
+          }
+
+          console.log('Post created in the database:', {
+            recipeName,
+            tags,
+            imageFile: data.Location, // Use S3 URL
+            ingredients,
+            prepTime,
+            cookTime,
+            steps,
+          });
+          res.status(200).send('Post created successfully');
+        }
+      );
+    });
+  } else {
+    // If no image is uploaded, insert the post without an image
+    db.run(
+      'INSERT INTO posts (user_id, recipeName, tags, ingredients, prepTime, cookTime, steps) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [req.body.userId, recipeName, tags, ingredients, prepTime, cookTime, steps],
+      (dbErr) => {
+        if (dbErr) {
+          console.error('Error inserting data into the database:', dbErr.message);
+          return res.status(500).send('Error inserting data into the database');
+        }
+
+        console.log('Post created in the database:', {
+          recipeName,
+          tags,
+          ingredients,
+          prepTime,
+          cookTime,
+          steps,
+        });
+        res.status(200).send('Post created successfully');
+      }
+    );
+  }
 });
+
 
 // Still need to update the route to include the user ID in the URL
 app.get('/getDailyMacros/:userId', (req, res) => {
@@ -135,6 +201,8 @@ app.post('/updateDailyMacros', (req, res) => {
     res.status(200).send('Daily macros updated successfully');
   });
 });
+
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
