@@ -99,7 +99,7 @@ const SignUpPage = () => {
         </div>
         {passwordError && <div className="error-message">{passwordError}</div>}
         <button type="submit">Sign Up</button>
-        <Link to="/signin">Already have an account? Sign In!</Link>
+        <Link to="/">Already have an account? Sign In!</Link>
       </form>
     </div>
   );
