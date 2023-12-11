@@ -54,6 +54,7 @@ const SignInPage: React.FC = () => {
 
   return (
     <div className="sign-in-container">
+      <h1 className="sign-in-title">Recipify</h1>
       <h2>Sign In</h2>
       <form onSubmit={handleSignIn}>
         <div className="form-group">
