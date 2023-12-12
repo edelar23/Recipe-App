@@ -15,7 +15,7 @@ function Home() {
     <div className="home-container">
       {isAuthenticated && (
         <div className="greeting">
-          <p>Hello, {user && user.name}! This is who are signed in as.</p>
+          <p>Hello, {user && user.name}! This is who is signed in.</p>
         </div>
       )}
       <PostComponent />

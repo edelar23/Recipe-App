@@ -13,6 +13,9 @@ interface PostData {
   prepTime: string;
   cookTime: string;
   steps: string;
+  calories: string;
+  protein: string;
+  carbs: string
 }
 
 export default function CreatePost() {
@@ -28,6 +31,9 @@ export default function CreatePost() {
     prepTime: "",
     cookTime: "",
     steps: "",
+    calories: "",
+    protein: "",
+    carbs: ""
   });
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -48,6 +54,18 @@ export default function CreatePost() {
 
     const user = authContext.user;
     const formData = new FormData();
+
+    const request = await fetch(`https://api.calorieninjas.com/v1/nutrition?query=${postData.recipeName}`, {
+      headers: {
+        'X-Api-Key': '7MMnvXI5/I4O01isnv8xqA==PlZmqMGZk6yKtejY'
+      }
+    });
+
+    const data = await request.json();
+    postData.calories = data.items[0].calories;
+    postData.protein = data.items[0].protein_g;
+    postData.carbs = data.items[0].carbohydrates_total_g;
+    console.log(data.items[0])
     
     formData.append("user_id", user.id);
     formData.append("recipeName", postData.recipeName);
@@ -56,28 +74,27 @@ export default function CreatePost() {
     formData.append("prepTime", postData.prepTime);
     formData.append("cookTime", postData.cookTime);
     formData.append("steps", postData.steps);
+    formData.append("calories", postData.calories);
+    formData.append("protein", postData.protein);
+    formData.append("carbs", postData.carbs);
 
     if (postData.imageFile) {
       formData.append("imageFile", postData.imageFile);
     }
 
     console.log("Form Data Before Sending:", formData);
-    console.log(postData);
+
+    const formDataObject = {};
+    formData.forEach((value,key) => {
+      formDataObject[key] = value;
+    });
+    console.log(formDataObject);
 
     try {
       const response = await fetch("http://localhost:3000/create", {
         method: "POST",
         body: formData,
       });
-
-      const request = await fetch(`https://api.calorieninjas.com/v1/nutrition?query=${postData.recipeName}`, {
-        headers: {
-          'X-Api-Key': '7MMnvXI5/I4O01isnv8xqA==PlZmqMGZk6yKtejY'
-        }
-      });
-
-      const data = await request.json();
-      console.log(data.items[0]);
 
       if (response.ok) {
         console.log("Post created successfully");
