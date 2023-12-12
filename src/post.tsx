@@ -1,4 +1,4 @@
-// MyPostComponent.jsx
+
 import './post.css';
 
 const PostComponent = () => {

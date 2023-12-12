@@ -62,6 +62,7 @@ export default function CreatePost() {
     }
 
     console.log("Form Data Before Sending:", formData);
+    console.log(postData);
 
     try {
       const response = await fetch("http://localhost:3000/create", {
@@ -69,9 +70,18 @@ export default function CreatePost() {
         body: formData,
       });
 
+      const request = await fetch(`https://api.calorieninjas.com/v1/nutrition?query=${postData.recipeName}`, {
+        headers: {
+          'X-Api-Key': '7MMnvXI5/I4O01isnv8xqA==PlZmqMGZk6yKtejY'
+        }
+      });
+
+      const data = await request.json();
+      console.log(data.items[0]);
+
       if (response.ok) {
         console.log("Post created successfully");
-        navigate("/home");
+        //navigate("/home");
       } else {
         console.error("Error creating post on the client side");
       }

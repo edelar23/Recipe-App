@@ -16,7 +16,7 @@
 .post{
   display: flex;
   flex-direction: column;
-  border: 2px solid white;
+  border-bottom: 3px solid gray;
   height: auto;
   width: 800px;
   margin-bottom: 10px;

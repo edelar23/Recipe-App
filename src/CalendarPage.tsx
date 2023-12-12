@@ -9,7 +9,7 @@ const CalendarPage: React.FC = () => {
     
     <div className="calendar-page">
       <div className="back-button">
-        <Link to="/">
+        <Link to="/home">
           <button>Back</button>
         </Link>
       </div>

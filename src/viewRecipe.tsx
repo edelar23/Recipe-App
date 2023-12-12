@@ -7,7 +7,7 @@ export default function ViewRecipe() {
     <>
       <LeftMenu />
       <div className="back-button">
-        <Link to="/">
+        <Link to="/home">
           <button>Back</button>
         </Link>
       </div>
