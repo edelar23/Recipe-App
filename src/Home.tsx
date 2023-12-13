@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import PostComponent from './post';
 import LeftMenu from './LeftMenu';
 import './Home.css'; // Create a CSS file for styling
+
 
 function Home() {
   const authContext = useContext(AuthContext);
@@ -11,6 +12,26 @@ function Home() {
   const isAuthenticated = authContext && authContext.isAuthenticated;
   const user = authContext && authContext.user;
 
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/getPosts');
+        const data = await response.json();
+        console.log(data)
+        setPosts(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array means this effect runs once when the component mounts
+
+
+
+
   return (
     <div className="home-container">
       {isAuthenticated && (
@@ -18,7 +39,10 @@ function Home() {
           <p>Hello, {user && user.name}! This is who is signed in.</p>
         </div>
       )}
-      <PostComponent />
+
+{posts.map(post => (
+        <PostComponent key={post.id} post={post} />
+      ))}
       <LeftMenu />
     </div>
   );

@@ -1,8 +1,32 @@
 import LeftMenu from "./LeftMenu";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from "react-router-dom";
 import "./viewRecipe.css";
 
+
+
 export default function ViewRecipe() {
+
+  const { postId } = useParams();
+  const [post, setPost] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/view/${postId}`);
+        const data = await response.json();
+        console.log(data)
+        setPost(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [postId]);
+
+  
+
   return (
     <>
       <LeftMenu />

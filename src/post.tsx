@@ -1,7 +1,10 @@
-
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './post.css';
 
-const PostComponent = () => {
+const PostComponent = ( {post} ) => {
+
+  const {id, user_id, recipeName, tags, imageFile, ingredients, steps, calories, protein, carbs, caption} = post;
+
   return (
     <div className="post">
       <div className="post-info">
@@ -12,31 +15,30 @@ const PostComponent = () => {
         />
         <div className="post-text-wrap">
           <div className="post-user">
-            <p id="user-name">Mr. Chef</p> <p id="user-at">@beginner_chef</p>
+            <p id="user-name">Mr. Chef</p> <p id="user-at">{id}</p>
           </div>
         </div>
       </div>
 
       <div className="dish-text">
         <p className="dish-p" id="dish-name">
-          Chicken Alfredo
+          {recipeName}
         </p>
         <p className="dish-p">
-          Hello! This is my first post on Recipe-ify and this is my take on
-          Chicken Alfredo.
+          {caption}
         </p>
       </div>
 
       <div className="dish-pic-wrap">
         <img
           className="dish-pic"
-          src="https://www.budgetbytes.com/wp-content/uploads/2022/07/Chicken-Alfredo-above-500x500.jpg"
+          src={imageFile}
           alt="picture of food"
         />
       </div>
 
       <div className="actions">
-        <p id="view-R">View Recipe</p>
+        <Link id="view-R" to={`/view/${id}`}>View Recipe</Link>
         <div className="save">
           <p>Comment</p>
           <p>Bookmark</p>

@@ -1,7 +1,12 @@
+html, body{
+  height: 100%;
+  width: 100%;
+}
+
+
 .create-post-container {
-    top: 5%;
+
     display: flex;
-    position: relative;
   }
   
   .left-panel {
@@ -9,8 +14,8 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    margin-top: 15%;
-    left: 10%;
+    margin-top: 35%;
+    left: 5%;
     padding: 20px;
     
   }

@@ -78,6 +78,8 @@ function Calendar() {
     setIsEditing(false);
   };
 
+  fetch("http://localhost:3000/data").then(res=> JSON.parse(res)).then(res=> console.log(res))
+
   return (
     <div className="calendar">
       <div className="daily-macros">
