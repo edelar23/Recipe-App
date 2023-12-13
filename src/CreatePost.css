@@ -5,11 +5,12 @@
   }
   
   .left-panel {
+    height: auto;
     position: relative;
     display: flex;
     flex-direction: column;
-    margin-top: 11%;
-    left: -10%;
+    margin-top: 15%;
+    left: 10%;
     padding: 20px;
     
   }
@@ -28,6 +29,10 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+  }
+
+  .steps{
+    margin-top: 50px;
   }
   
   .formatting-options {
@@ -80,8 +85,66 @@
     background-color: greenyellow;
   }
 
+  .selected-tags-container {
+    height: 200px; /* Adjust the height as needed */
+    width: 250px;
+    overflow-y: auto;
+  }
+
+  .listT{
+    margin: 0 0;
+    margin-bottom: 10px;
+  }
+  
+  .selected-tags-list {
+    max-height: 100%; /* Ensure the list doesn't exceed the container height */
+    max-width: 80%;
+  }
+
   .tags{
+    gap: 35px;
     display: flex;
     flex-direction: row;
-    gap: 20px;
+  }
+
+  .labelT{
+    margin-bottom: 5px;
+  }
+
+  .boxT{
+    height: 15em;
+    width: 13em;
+  }
+
+  .selectedT{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nameA{
+    height: 50px;
+  }
+
+  .nameB{
+    height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    resize: none;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .textP{
+    display: flex;
+    flex-direction: column;
+    width: 450px;
+  }
+
+  .cap{
+    font-size: large;
+    resize: none;
+  }
+
+  .areaT{
+    font-size: larger;
   }

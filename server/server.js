@@ -7,7 +7,6 @@ const path = require('path');
 const fs = require('fs');
 const aws = require('aws-sdk');
 const multer = require('multer');
-import cors from "cors";
 
 const upload = multer();
 
@@ -99,7 +98,7 @@ app.post('/signin', async (req, res) => {
 
 app.post('/create', upload.any(), async (req, res) => {
   console.log(req.files);
-  const { recipeName, tags, ingredients, prepTime, cookTime, steps, calories, protein, carbs } = req.body;
+  const { recipeName, tags, ingredients, prepTime, cookTime, steps, calories, protein, carbs, caption } = req.body;
   const imageFile = req.files && req.files.imageFile;
 
   if (imageFile) {
@@ -119,8 +118,8 @@ app.post('/create', upload.any(), async (req, res) => {
 
       // Insert the post into the database with the S3 URL
       db.run(
-        'INSERT INTO posts (user_id, recipeName, tags, imageFile, ingredients, prepTime, cookTime, steps, calories, protein, carbs) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [req.body.userId, recipeName, tags, data.Location, ingredients, prepTime, cookTime, steps, calories, protein, carbs],
+        'INSERT INTO posts (user_id, recipeName, tags, imageFile, ingredients, prepTime, cookTime, steps, calories, protein, carbs, caption) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [req.body.userId, recipeName, tags, data.Location, ingredients, prepTime, cookTime, steps, calories, protein, carbs, caption],
         (dbErr) => {
           if (dbErr) {
             console.error('Error inserting data into the database:', dbErr.message);
@@ -137,7 +136,8 @@ app.post('/create', upload.any(), async (req, res) => {
             steps,
             calories,
             protein,
-            carbs
+            carbs,
+            caption
           });
           res.status(200).send('Post created successfully');
         }
@@ -146,8 +146,8 @@ app.post('/create', upload.any(), async (req, res) => {
   } else {
     // If no image is uploaded, insert the post without an image
     db.run(
-      'INSERT INTO posts (user_id, recipeName, tags, ingredients, prepTime, cookTime, steps, calories, protein, carbs) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [req.body.userId, recipeName, tags, ingredients, prepTime, cookTime, steps, calories, protein, carbs],
+      'INSERT INTO posts (user_id, recipeName, tags, ingredients, prepTime, cookTime, steps, calories, protein, carbs, caption) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [req.body.userId, recipeName, tags, ingredients, prepTime, cookTime, steps, calories, protein, carbs, caption],
       (dbErr) => {
         if (dbErr) {
           console.error('Error inserting data into the database:', dbErr.message);
@@ -163,7 +163,8 @@ app.post('/create', upload.any(), async (req, res) => {
           steps,
           calories,
           protein, 
-          carbs
+          carbs,
+          caption
         });
         res.status(200).send('Post created successfully');
       }

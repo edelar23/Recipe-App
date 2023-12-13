@@ -2,7 +2,8 @@ import React, { useContext, ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import LeftMenu from "./LeftMenu";
 import { AuthContext } from "./AuthContext";
-import {DietaryTagsDropdown} from './tags';
+import { DietaryTagsDropdown } from "./tags";
+import IngredientInput  from "./Ingredients"
 import "./CreatePost.css";
 
 interface PostData {
@@ -16,10 +17,9 @@ interface PostData {
   steps: string;
   calories: string;
   protein: string;
-  carbs: string
+  carbs: string;
+  caption: string;
 }
-
-
 
 export default function CreatePost() {
   const authContext = useContext(AuthContext);
@@ -36,15 +36,32 @@ export default function CreatePost() {
     steps: "",
     calories: "",
     protein: "",
-    carbs: ""
+    carbs: "",
+    caption: "",
   });
 
- 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  const handleTagsChange = (tags: string[]) => {
+    setSelectedTags(tags);
+  };
+
+  const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
+
+  const handleIngredientChange = (ingredients: string[]) => {
+    setSelectedIngredients(ingredients);
+  };
+
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value, type } = e.target;
     setPostData((prevData) => ({
       ...prevData,
-      [name]: type === "file" ? (e.target as HTMLInputElement).files?.[0] || null : value,
+      [name]:
+        type === "file"
+          ? (e.target as HTMLInputElement).files?.[0] || null
+          : value,
     }));
   };
 
@@ -52,25 +69,32 @@ export default function CreatePost() {
     e.preventDefault();
 
     if (!authContext || !authContext.isAuthenticated || !authContext.user) {
-      console.log("You are not authenticated. Please sign in to create a post.");
+      console.log(
+        "You are not authenticated. Please sign in to create a post."
+      );
       return;
     }
 
     const user = authContext.user;
     const formData = new FormData();
 
-    const request = await fetch(`https://api.calorieninjas.com/v1/nutrition?query=${postData.recipeName}`, {
-      headers: {
-        'X-Api-Key': '7MMnvXI5/I4O01isnv8xqA==PlZmqMGZk6yKtejY'
+    const request = await fetch(
+      `https://api.calorieninjas.com/v1/nutrition?query=${postData.recipeName}`,
+      {
+        headers: {
+          "X-Api-Key": "7MMnvXI5/I4O01isnv8xqA==PlZmqMGZk6yKtejY",
+        },
       }
-    });
+    );
 
     const data = await request.json();
     postData.calories = data.items[0].calories;
     postData.protein = data.items[0].protein_g;
     postData.carbs = data.items[0].carbohydrates_total_g;
-    console.log(data.items[0])
-    
+    postData.tags = selectedTags.join(",");
+    postData.ingredients = selectedIngredients.join(",")
+    console.log(data.items[0]);
+
     formData.append("user_id", user.id);
     formData.append("recipeName", postData.recipeName);
     formData.append("tags", postData.tags);
@@ -81,6 +105,8 @@ export default function CreatePost() {
     formData.append("calories", postData.calories);
     formData.append("protein", postData.protein);
     formData.append("carbs", postData.carbs);
+    formData.append("caption", postData.caption);
+
 
     if (postData.imageFile) {
       formData.append("imageFile", postData.imageFile);
@@ -88,10 +114,8 @@ export default function CreatePost() {
 
     console.log("Form Data Before Sending:", formData);
 
-
-
     const formDataObject = {};
-    formData.forEach((value,key) => {
+    formData.forEach((value, key) => {
       formDataObject[key] = value;
     });
     console.log(formDataObject);
@@ -104,7 +128,7 @@ export default function CreatePost() {
 
       if (response.ok) {
         console.log("Post created successfully");
-        //navigate("/home");
+        navigate("/home");
       } else {
         console.error("Error creating post on the client side");
       }
@@ -113,8 +137,15 @@ export default function CreatePost() {
     }
   };
 
+  const maxLength = 150;
+
+  const handleTextareaChange = (e) => {
+    if (e.target.value.length <= maxLength) {
+      handleInputChange(e);
+    }
+  };
+
   return (
-    
     <>
       <LeftMenu />
       <div className="back-button">
@@ -127,16 +158,38 @@ export default function CreatePost() {
           <form onSubmit={handleSubmit}>
             <div className="input-group">
               <div className="input-div">
-                <label htmlFor="recipeName">Recipe Name</label>
-                <input
-                  type="text"
-                  id="recipeName"
-                  name="recipeName"
-                  value={postData.recipeName}
-                  onChange={handleInputChange}
-                />
-                <label htmlFor="tags">Add Tags</label>
-                <DietaryTagsDropdown />
+                <div className="textP">
+                  <label htmlFor="recipeName">Recipe Name</label>
+                  <input
+                    className="nameA"
+                    type="text"
+                    id="recipeName"
+                    name="recipeName"
+                    value={postData.recipeName}
+                    onChange={handleInputChange}
+                  />
+                  <label htmlFor="caption"> Caption </label>
+                  <textarea
+                    className="cap"
+                    id="caption"
+                    name="caption"
+                    rows={5}
+                    value={postData.caption}
+                    onChange={handleTextareaChange}
+                    maxLength={maxLength}
+                  ></textarea>
+                  <div
+                    style={{
+                      textAlign: "right",
+                      color: "white",
+                      fontSize: "13px",
+                      marginTop: "10px"
+                    }}
+                  >
+                    {postData.caption.length}/{maxLength} characters
+                  </div>
+                </div>
+                <DietaryTagsDropdown onTagsChange={handleTagsChange} />
               </div>
             </div>
 
@@ -151,18 +204,18 @@ export default function CreatePost() {
               />
             </div>
 
-            {/* Additional input groups go here */}
+            <IngredientInput onIngredientChange={handleIngredientChange} />
 
             <div className="align">
-              <label htmlFor="steps">Steps</label>
+              <label className="steps"htmlFor="steps">Steps</label>
               <textarea
+                className="areaT"
                 id="steps"
                 name="steps"
-                rows={10}
+                rows={20}
                 value={postData.steps}
                 onChange={handleInputChange}
               ></textarea>
-              <div className="gray-box">Format Text Options</div>
               <button className="btn" type="submit">
                 Create Post
               </button>
