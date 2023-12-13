@@ -79,3 +79,9 @@
     width: auto;
     background-color: greenyellow;
   }
+
+  .tags{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }

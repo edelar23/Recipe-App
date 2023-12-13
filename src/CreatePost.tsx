@@ -2,13 +2,14 @@ import React, { useContext, ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import LeftMenu from "./LeftMenu";
 import { AuthContext } from "./AuthContext";
+import {DietaryTagsDropdown} from './tags';
 import "./CreatePost.css";
 
 interface PostData {
   user_id: string;
   recipeName: string;
   tags: string;
-  imageFile: File | null;
+  imageFile: File | null | Blob;
   ingredients: string;
   prepTime: string;
   cookTime: string;
@@ -17,6 +18,8 @@ interface PostData {
   protein: string;
   carbs: string
 }
+
+
 
 export default function CreatePost() {
   const authContext = useContext(AuthContext);
@@ -36,6 +39,7 @@ export default function CreatePost() {
     carbs: ""
   });
 
+ 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
     setPostData((prevData) => ({
@@ -84,6 +88,8 @@ export default function CreatePost() {
 
     console.log("Form Data Before Sending:", formData);
 
+
+
     const formDataObject = {};
     formData.forEach((value,key) => {
       formDataObject[key] = value;
@@ -108,6 +114,7 @@ export default function CreatePost() {
   };
 
   return (
+    
     <>
       <LeftMenu />
       <div className="back-button">
@@ -129,13 +136,7 @@ export default function CreatePost() {
                   onChange={handleInputChange}
                 />
                 <label htmlFor="tags">Add Tags</label>
-                <input
-                  type="text"
-                  id="tags"
-                  name="tags"
-                  value={postData.tags}
-                  onChange={handleInputChange}
-                />
+                <DietaryTagsDropdown />
               </div>
             </div>
 

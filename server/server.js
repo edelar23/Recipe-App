@@ -7,6 +7,7 @@ const path = require('path');
 const fs = require('fs');
 const aws = require('aws-sdk');
 const multer = require('multer');
+import cors from "cors";
 
 const upload = multer();
 
@@ -94,6 +95,7 @@ app.post('/signin', async (req, res) => {
     }
   );
 });
+
 
 app.post('/create', upload.any(), async (req, res) => {
   console.log(req.files);
