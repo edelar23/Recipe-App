@@ -212,7 +212,7 @@ app.post('/updateDailyMacros', (req, res) => {
 });
 
 app.get('/getPosts', (req, res) => {
-  db.query('SELECT * FROM posts', (err, data) => {
+  db.all('SELECT * FROM posts', (err, data) => {
     if (err) {
       return res.json(err);
     }

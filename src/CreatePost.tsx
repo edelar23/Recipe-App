@@ -10,7 +10,7 @@ interface PostData {
   user_id: string;
   recipeName: string;
   tags: string;
-  imageFile: File | null | Blob;
+  imageFile: File | null | Blob | string;
   ingredients: string;
   prepTime: string;
   cookTime: string;

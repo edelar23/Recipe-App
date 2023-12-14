@@ -7,11 +7,14 @@
   color: white;
 }
 
-.profile-pic{
-  max-width: 10%;
-  height: auto;
+.profile-pic {
+  height: 75px; /* Fixed height */
+  width: 75px; /* Fixed width */
+  object-fit: cover; /* Ensures the image covers the container without stretching */
   border-radius: 50%;
+  /* Additional styling if needed */
 }
+
 
 .post{
   display: flex;
@@ -58,8 +61,10 @@
   margin: 20px auto;
 }
 
-.dish-pic{
-  border-radius: 2%;
+.dish-pic {
+  width: 50%;       /* Ensure the image takes up 100% of its container's width */
+  height: 40%;      /* Allow the height to adjust proportionally based on the width */
+  object-fit: cover; /* Ensure the image covers the container without stretching */
 }
 
 .actions{

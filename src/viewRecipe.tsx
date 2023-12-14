@@ -12,8 +12,8 @@ export default function ViewRecipe() {
       try {
         const response = await fetch("http://localhost:3000/getPosts");
         const data = await response.json();
-        console.log(data[postId - 1]);
-        setPosts(data[postId - 1]);
+        console.log(data[postId-1])
+        setPosts(data[postId-1]);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -21,6 +21,8 @@ export default function ViewRecipe() {
 
     fetchData();
   }, []); // Empty dependency array means this effect runs once when the component mounts
+
+
 
   return (
     <>
@@ -36,7 +38,7 @@ export default function ViewRecipe() {
           <div className="triple_content">
             <img
               className="pic"
-              src="https://www.budgetbytes.com/wp-content/uploads/2022/07/Chicken-Alfredo-above-500x500.jpg"
+              src={posts.imageFile}
               alt="dish picture"
             />
             <div className="ingred">
@@ -53,9 +55,9 @@ export default function ViewRecipe() {
             <div className="macros">
               <label className="header">Macros (100g)</label>
               <div>
-                <p>Calories: {posts.calories}</p>
-                <p>Protein: {posts.protein}</p>
-                <p>Carbs: {posts.carbs}</p>
+                <p>Calories: {posts.calories}g</p>
+                <p>Protein: {posts.protein}g</p>
+                <p>Carbs: {posts.carbs}g</p>
               </div>
             </div>
           </div>

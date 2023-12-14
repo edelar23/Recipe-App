@@ -3,19 +3,19 @@ import './post.css';
 
 const PostComponent = ( {post} ) => {
 
-  const {id, user_id, recipeName, tags, imageFile, ingredients, steps, calories, protein, carbs, caption} = post;
+  const {id, user_id, recipeName, tags, imageFile, ingredients, steps, calories, protein, carbs, caption, prepTime, cookTime} = post;
 
   return (
     <div className="post">
       <div className="post-info">
         <img
           className="profile-pic"
-          src="https://i.seadn.io/gae/byB5ArJ2sPDf2QkE_U-zHXK2fmorLggU3qj-K58DtKEpub_2aXo0768kMM5cqeaNOPhS6wapUDAtv2rTZXsz3vtcY1Jzep1II1pmujg?auto=format&dpr=1&w=1000"
+          src={prepTime}
           alt="pfp"
         />
         <div className="post-text-wrap">
           <div className="post-user">
-            <p id="user-name">Mr. Chef</p> <p id="user-at">{id}</p>
+            <p id="user-name">@{cookTime}</p> <p id="user-at">{id}</p>
           </div>
         </div>
       </div>
