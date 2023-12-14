@@ -57,7 +57,7 @@ export default function ViewRecipe() {
           </div>
           <div className="steps_container">
             <p className="header">Steps</p>
-            <div className="subheader">
+            <div className="subheader" >
             {posts.steps}
             </div>
           </div>
