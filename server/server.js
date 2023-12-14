@@ -117,7 +117,7 @@ app.post('/create', upload.any(), async (req, res) => {
       
       db.run(
         'INSERT INTO posts (user_id, recipeName, tags, imageFile, ingredients, prepTime, cookTime, steps, calories, protein, carbs, caption) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [req.body.user_id, recipeName, tags, imageUrl, ingredients, prepTime, cookTime, steps, calories, protein, carbs, caption],
+        [req.body.user_id, recipeName, tags, imageFile, ingredients, prepTime, cookTime, steps, calories, protein, carbs, caption],
         (dbErr) => {
           if (dbErr) {
             console.error('Error inserting data into the database:', dbErr.message);
@@ -127,7 +127,7 @@ app.post('/create', upload.any(), async (req, res) => {
           console.log('Post created in the database:', {
             recipeName,
             tags,
-            imageFile: imageUrl, // Use Firebase Storage URL
+            imageFile, // Use Firebase Storage URL
             ingredients,
             prepTime,
             cookTime,
