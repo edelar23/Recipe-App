@@ -15,7 +15,7 @@ const PostComponent = ( {post} ) => {
         />
         <div className="post-text-wrap">
           <div className="post-user">
-            <p id="user-name">@{cookTime}</p> <p id="user-at">{id}</p>
+            <p id="user-name">@{cookTime}</p> <p id="user-at"></p>
           </div>
         </div>
       </div>

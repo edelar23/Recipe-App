@@ -92,6 +92,7 @@ export default function CreatePost() {
     postData.protein = data.items[0].protein_g;
     postData.carbs = data.items[0].carbohydrates_total_g;
     postData.tags = selectedTags.join(",");
+    postData.cookTime = (user && user.name)
     postData.ingredients = selectedIngredients.join(",")
     console.log(data.items[0]);
 

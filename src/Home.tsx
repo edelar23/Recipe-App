@@ -44,7 +44,6 @@ function Home() {
         <PostComponent key={post.id} post={post} />
       ))}
 
-      
       <LeftMenu />
     </div>
   );
