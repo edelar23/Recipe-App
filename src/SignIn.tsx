@@ -53,6 +53,9 @@ const SignInPage: React.FC = () => {
   };
 
   return (
+    <>
+   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>    <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>    <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>  <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>
+
     <div className="sign-in-container">
       <h1 className="sign-in-title">Recipify</h1>
       <h2>Sign In</h2>
@@ -86,7 +89,8 @@ const SignInPage: React.FC = () => {
       </form>
       <Link to="/signup">Don't have an account? Sign Up</Link>
     </div>
-
+    <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>    <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>  <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link,  useNavigate  } from 'react-router-dom';
 import './SignUp.css'; // Make sure to create this CSS file
 
 import React, { useState, ChangeEvent, FormEvent } from 'react';
@@ -10,6 +10,8 @@ const SignUpPage = () => {
     password: '',
     birthday: ''
   });
+
+  const navigate = useNavigate();
 
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
@@ -36,6 +38,7 @@ const SignUpPage = () => {
 
       if (response.ok) {
         console.log('User signed up successfully');
+        navigate("/home");
         // Redirect to another page or display a success message
       } else {
         console.error('Error signing up');
@@ -47,6 +50,8 @@ const SignUpPage = () => {
     }
   };
   return (
+    <>
+    <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   
     <div className="sign-up-container">
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
@@ -102,6 +107,8 @@ const SignUpPage = () => {
         <Link to="/">Already have an account? Sign In!</Link>
       </form>
     </div>
+    <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   
+    </>
   );
 };
 

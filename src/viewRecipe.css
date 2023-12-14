@@ -7,7 +7,7 @@
   }
 
 .info_container{
-
+    margin-top: 5em;
     margin: 1em;
     display: flex;
     flex-direction: column;
@@ -41,9 +41,9 @@
 }
 
 .pic{
-    margin-left: 1em;
+  margin-left: 1em;
   max-width: 100%; /* Set the maximum width to the container width */
-  max-height: 500px; /* Set the maximum height as needed */
+  max-height: 300px; /* Set the maximum height as needed */
   height: auto;
 }
 

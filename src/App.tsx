@@ -8,6 +8,7 @@ import CalendarPage from './CalendarPage';
 import CreatePost from './CreatePost';
 import SignUpPage from './Signup';
 import Home from './Home';
+import ProfilePage from './Profile';
 import RequireAuth from './PrivateRoute'; // Import the RequireAuth component
 import './App.css';
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/home" element={<RequireAuth><Home /></RequireAuth>} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/profile" element={<ProfilePage/>}/>
         </Routes>
       </Router>
     </AuthProvider>

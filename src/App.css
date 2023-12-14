@@ -52,6 +52,42 @@
   flex-direction: column;
 }
 
+/* Add this to your existing CSS */
+
+.top {
+  gap: 0cm;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 5px solid gray; /* Add this line for the gray border */
+}
+
+
+.pf{
+
+  margin-top: 1em;
+  left: 9em;
+  height: 200px; /* Fixed height */
+  width: 200px; /* Fixed width */
+  object-fit: cover; /* Ensures the image covers the container without stretching */
+  border-radius: 50%;
+}
+
+.user{
+  font-size: x-large;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bolder;
+}
+
+.pf_holder{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2em;
+  margin-top: 2em;
+  margin-right: 40em; /* Adjust margin as needed */
+}
+
 .dish-p{
   margin: 2px;
 }

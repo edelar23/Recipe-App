@@ -12,8 +12,8 @@ export default function ViewRecipe() {
       try {
         const response = await fetch("http://localhost:3000/getPosts");
         const data = await response.json();
-        console.log(data[postId-1])
-        setPosts(data[postId-1]);
+        console.log(data[postId - 1]);
+        setPosts(data[postId - 1]);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -21,8 +21,6 @@ export default function ViewRecipe() {
 
     fetchData();
   }, []); // Empty dependency array means this effect runs once when the component mounts
-
-
 
   return (
     <>
@@ -36,11 +34,7 @@ export default function ViewRecipe() {
         <div className="info_container">
           <div className="recipe_name">{posts.recipeName}</div>
           <div className="triple_content">
-            <img
-              className="pic"
-              src={posts.imageFile}
-              alt="dish picture"
-            />
+            <img className="pic" src={posts.imageFile} alt="dish picture" />
             <div className="ingred">
               <p className="header">Ingredients</p>
               <ul className="list">
@@ -49,6 +43,17 @@ export default function ViewRecipe() {
                     .split(",")
                     .map((ingredient, index) => (
                       <li key={index}>{ingredient.trim()}</li>
+                    ))}
+              </ul>
+            </div>
+             <div className="ingred">
+              <p className="header">Tags</p>
+              <ul className="list">
+                {posts.tags &&
+                  posts.tags
+                    .split(",")
+                    .map((tag, index) => (
+                      <li key={index}>{tag.trim()}</li>
                     ))}
               </ul>
             </div>

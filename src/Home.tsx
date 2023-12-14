@@ -13,7 +13,6 @@ function Home() {
   const user = authContext && authContext.user;
 
   const [posts, setPosts] = useState([]);
-  const [filteredPosts, setFilteredPosts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,16 +28,6 @@ function Home() {
 
     fetchData();
   }, []); // Empty dependency array means this effect runs once when the component mounts
-
-  const handleTagSelect = (selectedTags) => {
-    // Filter posts based on selected tags
-    const filtered = posts.filter((post) => {
-      const postTags = post.tags.split(','); // Assuming tags are stored as a comma-separated string
-      return selectedTags.every((tag) => postTags.includes(tag));
-    });
-
-    setFilteredPosts(filtered);
-  };
 
 
   return (

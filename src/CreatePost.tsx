@@ -108,8 +108,10 @@ export default function CreatePost() {
     formData.append("caption", postData.caption);
 
 
+      const file = "https://as2.ftcdn.net/v2/jpg/06/11/08/25/500_F_611082538_Vi6DXlDF3k1oMHveIMRlRSc190nXdGW4.jpg"
+
     if (postData.imageFile) {
-      formData.append("imageFile", postData.imageFile);
+      formData.append("imageFile", file);
     }
 
     console.log("Form Data Before Sending:", formData);
