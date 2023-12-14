@@ -1,11 +1,4 @@
-html, body{
-  height: 100%;
-  width: 100%;
-}
-
-
 .create-post-container {
-
     display: flex;
   }
   
@@ -14,7 +7,7 @@ html, body{
     position: relative;
     display: flex;
     flex-direction: column;
-    margin-top: 35%;
+    margin-top: 12%;
     left: 5%;
     padding: 20px;
     

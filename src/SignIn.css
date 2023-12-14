@@ -15,7 +15,7 @@
     margin-bottom: 20px;
     color:#6c9e4f
   }
-  
+
   h2 {
     margin-bottom: 20px;
   }
@@ -68,3 +68,10 @@
     color:#007bff
   }
   
+
+  .invisible{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }

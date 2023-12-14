@@ -100,6 +100,9 @@
   color:palevioletred;
   font-weight: bolder;
 }
+
 body{
   background-color: black;
+  height: 100%;
+  width: 100%;
 }
