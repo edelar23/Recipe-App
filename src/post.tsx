@@ -40,10 +40,8 @@ const PostComponent = ( {post} ) => {
       <div className="actions">
         <Link id="view-R" to={`/view/${id}`}>View Recipe</Link>
         <div className="save">
-          <p>Comment</p>
-          <p>Bookmark</p>
-          <p>Like</p>
-          <p>Share</p>
+        <p>Like</p>
+
         </div>
       </div>
     </div>

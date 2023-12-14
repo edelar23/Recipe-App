@@ -23,14 +23,9 @@ function LeftMenu() {
       <div className="menu-item">
         <Link to="/profile"><button>Profile</button></Link>
       </div>
-      <div className="menu-item">
-        <Link to="/notifications"><button>Notifications</button></Link>
-      </div>
+
       <div className="menu-item">
         <Link to="/calendar"><button>Calendar</button></Link>
-      </div>
-      <div className="menu-item">
-        <Link to="/bookmarks"><button>Bookmarks</button></Link>
       </div>
       <div className="menu-item">
         <Link to="/create"><button>Create a Post</button></Link>

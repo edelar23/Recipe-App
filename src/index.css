@@ -24,9 +24,8 @@ a:hover {
 }
 
 body, html{
-  display: flex;
-
-   height: 125vh;
+   display: flex;
+   height: auto;
 }
 
 h1 {
