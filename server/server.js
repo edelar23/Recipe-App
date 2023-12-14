@@ -220,23 +220,6 @@ app.get('/getPosts', (req, res) => {
   });
 });
 
-app.get('/view/:postId', (req, res) => {
-  const postId = req.params.postId;
-
-  db.get('SELECT * FROM posts WHERE id = ?', [postId], (err, data) => {
-    if (err) {
-      return res.json(err);
-    }
-
-    if (data) {
-      // Send the post data as JSON response
-      return res.json(data);
-    } else {
-      res.status(404).send('Post not found');
-    }
-  });
-});
-
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
