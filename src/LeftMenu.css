@@ -16,10 +16,11 @@
   padding: 20px;
   }
   
-  .menu-title {
-    font-size: 1.5rem; /* Adjust the font size for the title */
-    color: burlywood;
-    margin-bottom: 10px; /* Add spacing between the title and menu items */
+ 
+  .menu-icon{
+    width: 10rem;
+    height: auto;
+    margin-right: 0.5em;
   }
   
   .menu-divider {

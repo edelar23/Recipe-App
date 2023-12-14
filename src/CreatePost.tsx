@@ -5,6 +5,24 @@ import { AuthContext } from "./AuthContext";
 import { DietaryTagsDropdown } from "./tags";
 import IngredientInput  from "./Ingredients"
 import "./CreatePost.css";
+import { initializeApp } from "firebase/app";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { v4 as uuidv4} from "uuid";
+import { getDownloadURL } from "firebase/storage";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBLrDQHBEtImDScaEUxCukYGg4ipzXhkDY",
+  authDomain: "recipe-app-86e28.firebaseapp.com",
+  projectId: "recipe-app-86e28",
+  storageBucket: "recipe-app-86e28.appspot.com",
+  messagingSenderId: "552327482514",
+  appId: "1:552327482514:web:3b90a235af6a22ed756a4b",
+  measurementId: "G-WFCKPWH3CV"
+};
+
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app); 
 
 interface PostData {
   user_id: string;
@@ -112,9 +130,11 @@ export default function CreatePost() {
       const file = "https://as2.ftcdn.net/v2/jpg/06/11/08/25/500_F_611082538_Vi6DXlDF3k1oMHveIMRlRSc190nXdGW4.jpg"
 
     if (postData.imageFile) {
-      formData.append("imageFile", file);
-    }
-
+      const imageRef = ref(storage, `images/${uuidv4()}_${postData.imageFile.name}`);
+      await uploadBytes(imageRef, postData.imageFile);
+      const imageUrl = await getDownloadURL(imageRef);
+      formData.append("imageFile", imageUrl);    }
+    
     console.log("Form Data Before Sending:", formData);
 
     const formDataObject = {};

@@ -7,23 +7,13 @@ const path = require('path');
 const fs = require('fs');
 const aws = require('aws-sdk');
 const multer = require('multer');
+const { initializeApp } = require('firebase/app');
+const { getStorage, ref, uploadBytes, getDownloadURL } = require('firebase/storage');
+const { v4: uuidv4 } = require('uuid');
 
 const upload = multer();
 
-// ES6+ example
-//import { S3Client} from "@aws-sdk/client-s3";
 
-//import dotenv from 'dotenv'
-
-//dotenv.config()
-
-aws.config.update({
-  accessKeyId: 'AKIA2IS4W5Z5RSFM2OO5',
-  secretAccessKey: 'E0kLTwjotykDawiZhhvZ/clPG/bzPvX7a/bBVk/I',
-  region: 'us-east-2',
-});
-
-const s3 = new aws.S3();
 
 app.use(cors());
 app.use(express.json());
@@ -35,6 +25,20 @@ const db = new sqlite3.Database('users.db', (err) => {
     console.log('Connected to SQLite database');
   }
 });
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBLrDQHBEtImDScaEUxCukYGg4ipzXhkDY",
+  authDomain: "recipe-app-86e28.firebaseapp.com",
+  projectId: "recipe-app-86e28",
+  storageBucket: "recipe-app-86e28.appspot.com",
+  messagingSenderId: "552327482514",
+  appId: "1:552327482514:web:3b90a235af6a22ed756a4b",
+  measurementId: "G-WFCKPWH3CV"
+};
+
+const appFirebase = initializeApp(firebaseConfig);
+const storage = getStorage(appFirebase);
+
 
 app.post('/signup', async (req, res) => {
   const { name, email, password, birthday } = req.body;
@@ -98,28 +102,22 @@ app.post('/signin', async (req, res) => {
 
 app.post('/create', upload.any(), async (req, res) => {
   console.log(req.files);
-  const { recipeName, tags, ingredients, prepTime, cookTime, steps, calories, protein, carbs, caption } = req.body;
-  const imageFile = req.files && req.files.imageFile;
+  const { recipeName, tags, imageFile, ingredients, prepTime, cookTime, steps, calories, protein, carbs, caption } = req.body;
 
   if (imageFile) {
-    const params = {
-      Bucket: 'usersandposts',
-      Key: `uploads/${Date.now()}_${imageFile.name}`,
-      Body: imageFile.data,
-      ContentType: imageFile.mimetype,
-    };
+    const fileName = imageFile.split('/').pop().split('?')[0];
+    const imageRef = ref(storage, `uploads/${fileName}`);
+    
+    try {
+      await uploadBytes(imageRef, imageFile.buffer);
 
-    // Upload the image to S3
-    s3.upload(params, async (err, data) => {
-      if (err) {
-        console.error('Error uploading file to S3:', err);
-        return res.status(500).send('Error uploading file to S3');
-      }
-
-      // Insert the post into the database with the S3 URL
+      const imageUrl = await getDownloadURL(imageRef, { contentDisposition: 'inline' });
+      
+      // Insert the post into the database with the Firebase Storage URL
+      
       db.run(
         'INSERT INTO posts (user_id, recipeName, tags, imageFile, ingredients, prepTime, cookTime, steps, calories, protein, carbs, caption) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [req.body.userId, recipeName, tags, data.Location, ingredients, prepTime, cookTime, steps, calories, protein, carbs, caption],
+        [req.body.user_id, recipeName, tags, imageUrl, ingredients, prepTime, cookTime, steps, calories, protein, carbs, caption],
         (dbErr) => {
           if (dbErr) {
             console.error('Error inserting data into the database:', dbErr.message);
@@ -129,7 +127,7 @@ app.post('/create', upload.any(), async (req, res) => {
           console.log('Post created in the database:', {
             recipeName,
             tags,
-            imageFile: data.Location, // Use S3 URL
+            imageFile: imageUrl, // Use Firebase Storage URL
             ingredients,
             prepTime,
             cookTime,
@@ -137,17 +135,20 @@ app.post('/create', upload.any(), async (req, res) => {
             calories,
             protein,
             carbs,
-            caption
+            caption,
           });
           res.status(200).send('Post created successfully');
         }
       );
-    });
+    } catch (err) {
+      console.error('Error uploading file to Firebase Storage:', err);
+      return res.status(500).send('Error uploading file to Firebase Storage');
+    }
   } else {
     // If no image is uploaded, insert the post without an image
     db.run(
       'INSERT INTO posts (user_id, recipeName, tags, ingredients, prepTime, cookTime, steps, calories, protein, carbs, caption) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [req.body.userId, recipeName, tags, ingredients, prepTime, cookTime, steps, calories, protein, carbs, caption],
+      [req.body.user_id, recipeName, tags, ingredients, prepTime, cookTime, steps, calories, protein, carbs, caption],
       (dbErr) => {
         if (dbErr) {
           console.error('Error inserting data into the database:', dbErr.message);
@@ -162,16 +163,15 @@ app.post('/create', upload.any(), async (req, res) => {
           cookTime,
           steps,
           calories,
-          protein, 
+          protein,
           carbs,
-          caption
+          caption,
         });
         res.status(200).send('Post created successfully');
       }
     );
   }
 });
-
 
 // Still need to update the route to include the user ID in the URL
 app.get('/getDailyMacros/:userId', (req, res) => {
@@ -213,6 +213,17 @@ app.post('/updateDailyMacros', (req, res) => {
 
 app.get('/getPosts', (req, res) => {
   db.all('SELECT * FROM posts', (err, data) => {
+    if (err) {
+      return res.json(err);
+    }
+    return res.json(data);
+  });
+});
+
+app.get ('/getPosts/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  db.all('SELECT * FROM posts WHERE user_id = ?', [userId], (err, data) => {
     if (err) {
       return res.json(err);
     }

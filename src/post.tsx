@@ -34,6 +34,8 @@ const PostComponent = ( {post} ) => {
           className="dish-pic"
           src={imageFile}
           alt="picture of food"
+          onLoad={() => console.log("loaded", imageFile)}
+          onError={() => console.log("error", imageFile)}
         />
       </div>
 

@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
 import './SignIn.css';
 
+import recipifyIcon from './recipify_logo.png';
+
+
 const SignInPage: React.FC = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -57,7 +60,9 @@ const SignInPage: React.FC = () => {
    <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>    <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>    <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>  <div style={{ color: 'black' }}>hey</div>   <div style={{ color: 'black' }}>hey</div>
 
     <div className="sign-in-container">
-      <h1 className="sign-in-title">Recipify</h1>
+      <h1 className="sign-in-title">Recipify
+      <img src={recipifyIcon} alt="Recipify Icon" className='menu-icon'/>
+      </h1>
       <h2>Sign In</h2>
       <form onSubmit={handleSignIn}>
         <div className="form-group">

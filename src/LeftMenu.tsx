@@ -4,6 +4,8 @@ import { AuthContext } from './AuthContext';
 
 import './LeftMenu.css';
 
+import recipifyIcon from './recipify_logo.png';
+
 function LeftMenu() {
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
@@ -15,7 +17,10 @@ function LeftMenu() {
 
   return (
     <div className="left-menu">
-      <div className="menu-title">Recipify</div>
+      
+        <img src={recipifyIcon} alt="Recipify Icon" className='menu-icon'/>
+      
+
       <div className="menu-divider"></div>
       <div className="menu-item">
         <Link to="/home"><button>Home</button></Link>
