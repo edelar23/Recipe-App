@@ -1,24 +1,21 @@
 import LeftMenu from "./LeftMenu";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./viewRecipe.css";
 
-
-
 export default function ViewRecipe() {
-  
   const { postId } = useParams();
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/getPosts');
+        const response = await fetch("http://localhost:3000/getPosts");
         const data = await response.json();
-        console.log(data[postId - 1])
+        console.log(data[postId - 1]);
         setPosts(data[postId - 1]);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
@@ -45,21 +42,26 @@ export default function ViewRecipe() {
             <div className="ingred">
               <p className="header">Ingredients</p>
               <ul className="list">
-              {posts.ingredients && posts.ingredients.split(',').map((ingredient, index) => (
-  <li key={index}>{ingredient.trim()}</li>
-))}
-
-
-
+                {posts.ingredients &&
+                  posts.ingredients
+                    .split(",")
+                    .map((ingredient, index) => (
+                      <li key={index}>{ingredient.trim()}</li>
+                    ))}
               </ul>
             </div>
-            <div className="macros"></div>
+            <div className="macros">
+              <label className="header">Macros (100g)</label>
+              <div>
+                <p>Calories: {posts.calories}</p>
+                <p>Protein: {posts.protein}</p>
+                <p>Carbs: {posts.carbs}</p>
+              </div>
+            </div>
           </div>
           <div className="steps_container">
             <p className="header">Steps</p>
-            <div className="subheader" >
-            {posts.steps}
-            </div>
+            <div className="subheader">{posts.steps}</div>
           </div>
         </div>
       </div>

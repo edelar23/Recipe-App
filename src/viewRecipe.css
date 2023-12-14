@@ -51,6 +51,14 @@
     height: auto;
 }
 
+.macros{
+    display: flex;
+    flex-direction: column;
+    font-weight: bolder;
+    font-size: larger;
+    margin-left: 3em;
+}
+
 .list{
     position: relative;
     display: flex;

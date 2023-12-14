@@ -38,9 +38,6 @@ function LeftMenu() {
       <div className="menu-item" onClick={handleSignOut}>
         <button>Sign Out</button>
       </div>
-      <div className="menu-item">
-        <Link to="/view"><button>View Recipe</button></Link>
-      </div>
     </div>
   );
 }
